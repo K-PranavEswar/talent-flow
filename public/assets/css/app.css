@@ -1,0 +1,164 @@
+/* 🌌 GALAXY PURPLE DARK THEME (V2.0)
+   Designed for readability, depth & smooth glow aesthetic
+   Author: MACSEEDS Team
+*/
+
+/* Base background and text */
+body[data-bs-theme="dark"] {
+  background: radial-gradient(circle at top left, #0e062d 0%, #0a0620 40%, #06041c 100%);
+  color: #e8e6f9;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+/* 🌠 NAVBAR - Deep purple nebula gradient */
+body[data-bs-theme="dark"] .navbar {
+  background: linear-gradient(90deg, #2a0845, #480ca8, #7209b7, #3f37c9);
+  box-shadow: 0 2px 20px rgba(144, 89, 255, 0.35);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.navbar .navbar-brand {
+  color: #fff !important;
+  text-shadow: 0 0 8px rgba(255,255,255,0.3);
+  letter-spacing: 0.5px;
+}
+.navbar .nav-link {
+  color: #cbbaff !important;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+.navbar .nav-link:hover {
+  color: #fff !important;
+  text-shadow: 0 0 8px rgba(255,255,255,0.5);
+}
+#themeToggle i {
+  filter: drop-shadow(0 0 8px rgba(255,255,255,0.6));
+}
+
+/* 🌌 Cards — Nebula-inspired gradient containers */
+body[data-bs-theme="dark"] .card {
+  background: linear-gradient(145deg, #1a093e 0%, #2a1457 50%, #3d1b72 100%);
+  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 6px 25px rgba(87, 23, 255, 0.2);
+  border-radius: 18px;
+  color: #ece9ff;
+  transition: all 0.3s ease-in-out;
+}
+body[data-bs-theme="dark"] .card:hover {
+  box-shadow: 0 0 30px rgba(150, 70, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Card headers */
+body[data-bs-theme="dark"] .card-header {
+  background: rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  color: #eaeaff;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+}
+
+/* 🌈 Card Titles (Your Recent Tasks, Task Details) */
+body[data-bs-theme="dark"] .card-header h5,
+body[data-bs-theme="dark"] .card-header .fw-semibold {
+  font-weight: 700;
+  background: linear-gradient(90deg, #ff80ff, #a46eff, #6a11cb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(160, 90, 255, 0.4);
+  letter-spacing: 0.3px;
+}
+
+/* 🌠 Main Task Title (Task #8 — OFFER etc.) */
+body[data-bs-theme="dark"] .card-header h5.mb-0 {
+  font-weight: 800;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #f72585, #7209b7, #4361ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 12px rgba(120, 60, 255, 0.6);
+}
+body[data-bs-theme="dark"] .card-header h5.mb-0:hover {
+  text-shadow: 0 0 16px rgba(180, 120, 255, 0.8);
+  transform: scale(1.01);
+  transition: all 0.25s ease-in-out;
+}
+
+/* 🪐 Buttons */
+body[data-bs-theme="dark"] .btn-primary {
+  background: linear-gradient(90deg, #7209b7, #560bad);
+  border: none;
+  color: #fff;
+  box-shadow: 0 0 12px rgba(137, 70, 255, 0.45);
+}
+body[data-bs-theme="dark"] .btn-primary:hover {
+  background: linear-gradient(90deg, #8338ec, #3a0ca3);
+  box-shadow: 0 0 18px rgba(167, 96, 255, 0.6);
+}
+body[data-bs-theme="dark"] .btn-danger {
+  background: linear-gradient(90deg, #d00000, #9d0208);
+  border: none;
+  box-shadow: 0 0 10px rgba(255, 50, 50, 0.4);
+}
+body[data-bs-theme="dark"] .btn-danger:hover {
+  background: linear-gradient(90deg, #ff1e1e, #a40606);
+}
+
+/* 🛰️ Sidebar Task List */
+body[data-bs-theme="dark"] .list-group-item {
+  background: rgba(255,255,255,0.05);
+  border: none;
+  color: #e0d7ff;
+  transition: all 0.2s ease;
+}
+body[data-bs-theme="dark"] .list-group-item.active {
+  background: linear-gradient(90deg, #3a0ca3, #7209b7);
+  color: #fff;
+  box-shadow: 0 0 14px rgba(130, 70, 255, 0.5);
+}
+body[data-bs-theme="dark"] .list-group-item:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* Text highlights */
+body[data-bs-theme="dark"] h3, 
+body[data-bs-theme="dark"] h5 {
+  color: #f1e8ff;
+}
+body[data-bs-theme="dark"] strong {
+  color: #cdb7ff;
+}
+
+/* ✅ Badges */
+body[data-bs-theme="dark"] .badge-success {
+  background-color: #00e0a6 !important;
+  color: #fff;
+  box-shadow: 0 0 8px rgba(0,255,180,0.3);
+}
+body[data-bs-theme="dark"] .badge-secondary {
+  background-color: #6c63ff !important;
+  box-shadow: 0 0 8px rgba(108,99,255,0.3);
+}
+body[data-bs-theme="dark"] .badge-danger {
+  background-color: #ff4b6e !important;
+  box-shadow: 0 0 8px rgba(255,90,130,0.3);
+}
+
+/* 🌌 Footer */
+body[data-bs-theme="dark"] footer.footer {
+  background: linear-gradient(90deg, #110534, #1a0848);
+  color: #b9a8ff;
+  border-top: none;
+  box-shadow: 0 -2px 25px rgba(95, 60, 255, 0.25);
+}
+body[data-bs-theme="dark"] footer.footer strong {
+  color: #d0b8ff;
+}
+body[data-bs-theme="dark"] footer.footer a {
+  color: #a06bff;
+}
+body[data-bs-theme="dark"] footer.footer a:hover {
+  color: #e3b3ff;
+  text-shadow: 0 0 6px rgba(200, 150, 255, 0.5);
+}
