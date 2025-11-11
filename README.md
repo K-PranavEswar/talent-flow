@@ -163,15 +163,4 @@ Admin Dashboard
 **Ananthu Krishna SS**
 💻 MCA | Frontend Developer
 
-## ⚖️ License
-
-This project is licensed under the **MIT License** — you are free to use, modify, and distribute this software.
-
----
-
 > © 2025 **MACSEEDS** | Hackathon Series – *Powered by lablab.ai*
-
-
-```
-Would you like me to generate a matching **architecture diagram (in PNG)** to include inside your README automatically (with user–PHP–MySQL flow)?
-```
