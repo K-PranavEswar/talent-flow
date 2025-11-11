@@ -44,24 +44,101 @@
 
 ```
 
-talentflow/
+TALENTFLOW/
 │
 ├── app/
-│   ├── Models/               # Contains PHP model files (Task.php, Admin.php, etc.)
-│   └── config/db.php         # Database connection
+│   ├── Controllers/
+│   │   ├── FaqController.php
+│   │   ├── InterviewController.php
+│   │   ├── LeaveController.php
+│   │   ├── OfferController.php
+│   │   └── OnboardingController.php
+│   │
+│   ├── libs/
+│   │   └── PHPMailer/
+│   │       └── src/
+│   │           ├── Exception.php
+│   │           ├── PHPMailer.php
+│   │           └── SMTP.php
+│   │
+│   ├── Models/
+│   │   ├── Admin.php
+│   │   ├── Artifact.php
+│   │   ├── DB.php
+│   │   ├── Leave.php
+│   │   ├── Run.php
+│   │   ├── Task.php
+│   │   └── User.php
+│   │
+│   ├── Services/
+│   │   ├── CalendarService.php
+│   │   ├── DocsService.php
+│   │   ├── FaqBrain
+│   │   ├── HRISService.php
+│   │   ├── IAMService.php
+│   │   ├── ITSMService.php
+│   │   ├── LeaveService.php
+│   │   ├── MailService.php
+│   │   ├── MessagingService.php
+│   │   └── Orchestrator.php
+│   │
+│   ├── Views/
+│   │   ├── 404.php
+│   │   ├── dashboard.php
+│   │   ├── faq.php
+│   │   ├── interview_form.php
+│   │   ├── layout.php
+│   │   ├── leave_form.php
+│   │   ├── leave_summary.php
+│   │   ├── offer_form.php
+│   │   ├── onboarding_form.php
+│   │   └── helpers.php
+│   │
+│   ├── config/
+│   │   ├── config.php
+│   │   ├── db.php
+│   │   ├── mail.php
+│   │   └── routes.php
+│   │
+│   ├── database/
+│   │   └── schema.sql
+│   │
+│   └── mock/
+│       ├── calendar.php
+│       ├── docs.php
+│       ├── hris.php
+│       ├── iam.php
+│       ├── itsm.php
+│       └── messaging.php
 │
 ├── public/
-│   ├── login.php             # Login page
-│   ├── signup.php            # Registration page
-│   ├── index.php             # Homepage / Dashboard
-│   ├── admin_dashboard.php   # Admin panel
-│   └── assets/               # CSS, JS, images
-│
-├── config/
-│   └── db.php                # Database configuration
-│
-├── README.md
-└── .gitignore
+│   ├── assets/
+│   │   ├── css/
+│   │   │   └── app.css
+│   │   └── js/
+│   │       └── app.js
+│   │
+│   ├── .htaccess
+│   ├── admin_dashboard.php
+│   ├── admin_login.php
+│   ├── admin_logout.php
+│   ├── admin_profile.php
+│   ├── analytics.php
+│   ├── api_live_stats.php
+│   ├── index.php
+│   ├── leave_action.php
+│   ├── login.php
+│   ├── signup.php
+│   ├── task_action.php
+│   ├── task_edit.php
+│   ├── update_profile.php
+│   │
+│   ├── .env.example
+│   ├── README.md
+│   ├── talentflow.sql
+│   └── test_email.php
+
+
 
 ````
 
