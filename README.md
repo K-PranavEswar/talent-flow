@@ -1,14 +1,4 @@
-Perfect — here’s the **complete ready-to-run bash script** 👇 that will:
 
-1. Create a **README.md** file for your project,
-2. Add the full professional documentation I wrote,
-3. Commit it, and
-4. Push it to your GitHub repo at
-   **[`https://github.com/K-PranavEswar/talent-flow`](https://github.com/K-PranavEswar/talent-flow)**
-
----
-
-### 🧾 Copy–Paste This in Git Bash (inside your project folder)
 
 ```bash
 cat <<'EOF' > README.md
