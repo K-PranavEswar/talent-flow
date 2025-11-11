@@ -129,12 +129,6 @@ Admin login
 Admin Dashboard
 [▶️ **Watch**](https://drive.google.com/file/d/1ROCrqZG7v6khu1YIJ-uEgfgAR3TZdd7W/view?usp=drive_link)<br><br>
 
-
-
-
-
-
-
 ---
 
 ## 🧠 Future Enhancements
@@ -168,7 +162,6 @@ Admin Dashboard
 
 **Ananthu Krishna SS**
 💻 MCA | Frontend Developer
----
 
 ## ⚖️ License
 
