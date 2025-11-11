@@ -1,18 +1,6 @@
-
-
-```bash
-cat <<'EOF' > README.md
 # 🌐 TalentFlow – HR Orchestrator
 
-> **TalentFlow** is a modern Human Resource (HR) workflow management and orchestration system designed to streamline HR tasks such as employee onboarding, task tracking, and analytics — all in one unified platform.
-
-![PHP](https://img.shields.io/badge/PHP-8.2-blue?logo=php)
-![MySQL](https://img.shields.io/badge/Database-MySQL-blue)
-![Bootstrap](https://img.shields.io/badge/UI-Bootstrap%205-563d7c?logo=bootstrap)
-![License](https://img.shields.io/badge/License-MIT-green)
-![Status](https://img.shields.io/badge/Status-Active-success)
-
----
+**TalentFlow** is a modern Human Resource (HR) workflow management and orchestration system designed to streamline HR tasks such as employee onboarding, task tracking, and analytics — all in one unified platform.
 
 ## 🚀 Features
 
