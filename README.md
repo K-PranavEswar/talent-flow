@@ -118,11 +118,22 @@ cd talent-flow
 
 ## 📸 Screenshots
 
-| Signup Page                                                     | Dashboard                                                        |
-| --------------------------------------------------------------- | ---------------------------------------------------------------- |
-| ![Signup](https://via.placeholder.com/400x250?text=Signup+Page) | ![Dashboard](https://via.placeholder.com/400x250?text=Dashboard) |
+Staff Login
+<img width="1918" height="1017" alt="image" src="https://github.com/user-attachments/assets/fa324f31-4202-465e-82bc-84e843d70f76" /><br><br>
+SignUp page
+<img width="1918" height="1017" alt="image" src="https://github.com/user-attachments/assets/492e1c6a-1f59-4c5a-99b4-4591463e7b1c" /><br><br>
+Staff DashBoard
+[▶️ **View**](https://drive.google.com/file/d/1Zkb3VYaakmRhfp2PZLPobB8jn58es9lN/view?usp=drive_link)<br><br>
+Admin login
+<img width="1918" height="1012" alt="image" src="https://github.com/user-attachments/assets/a1182b47-79c3-4e94-a29f-570b319c2106" /><br><br>
+Admin Dashboard
+[▶️ **Watch**](https://drive.google.com/file/d/1ROCrqZG7v6khu1YIJ-uEgfgAR3TZdd7W/view?usp=drive_link)<br><br>
 
-*(Replace with your actual screenshots once ready.)*
+
+
+
+
+
 
 ---
 
