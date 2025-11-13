@@ -236,6 +236,7 @@ Admin Dashboard
 
 **Sanish Mahi S N**
 💻 MCA | Documentation | UI designer
+📎 [LinkedIn Profile](https://www.linkedin.com/in/sanish-mahi-b41bb3312/)
 
 **Ananthu Krishna SS**
 💻 MCA | Frontend Developer
