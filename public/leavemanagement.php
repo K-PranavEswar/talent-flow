@@ -11,10 +11,6 @@ $pdo = DB::pdo();
 $success = '';
 $error = '';
 
-/* ---------------------------
-   HANDLE APPROVE / REJECT (POST)
-   Using POST is safer than GET.
----------------------------- */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id'])) {
     $id = intval($_POST['id']);
     $action = $_POST['action'] === 'approve' ? 'Approved' : ($_POST['action'] === 'reject' ? 'Rejected' : null);
@@ -29,13 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id'
     }
 }
 
-/* ---------------------------
-   FILTERS: status & search
----------------------------- */
-$statusFilter = $_GET['status'] ?? 'All'; // All | Pending | Approved | Rejected
+$statusFilter = $_GET['status'] ?? 'All';
 $search = trim($_GET['search'] ?? '');
 
-/* Build WHERE clause safely */
 $where = [];
 $params = [];
 
@@ -45,7 +37,6 @@ if ($statusFilter !== 'All' && in_array($statusFilter, ['Pending', 'Approved', '
 }
 
 if ($search !== '') {
-    // search against employee_name OR employee_email
     $where[] = "(employee_name LIKE ? OR employee_email LIKE ?)";
     $params[] = "%$search%";
     $params[] = "%$search%";
@@ -53,17 +44,11 @@ if ($search !== '') {
 
 $where_sql = $where ? ('WHERE ' . implode(' AND ', $where)) : '';
 
-/* ---------------------------
-   FETCH LEAVES (with filters)
----------------------------- */
 $sql = "SELECT * FROM leaves {$where_sql} ORDER BY id DESC";
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $leaves = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-/* ---------------------------
-   SUMMARY COUNTS (global, ignore filters)
----------------------------- */
 $countStmt = $pdo->query("SELECT
     SUM(status = 'Pending') AS pending,
     SUM(status = 'Approved') AS approved,
@@ -72,7 +57,6 @@ $countStmt = $pdo->query("SELECT
 FROM leaves");
 $counts = $countStmt->fetch(PDO::FETCH_ASSOC);
 
-/* Utility */
 function isActive($p) {
     return basename($_SERVER['PHP_SELF']) === $p ? 'active' : '';
 }
@@ -101,33 +85,87 @@ function h($s){ return htmlspecialchars($s, ENT_QUOTES|ENT_SUBSTITUTE, 'UTF-8');
 body{
   margin:0;
   font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;
-  background:var(--bg);
-  color:#fff;
+  background: #090314;
+  color: #eee;
 }
 
-/* Sidebar (matches your screenshot) */
+/* --------------------------
+    FIXED TALENTFLOW SIDEBAR
+--------------------------- */
 .sidebar {
-    width: 250px;
-    height: 100vh;
-    background: #0d0c28;
-    border-right: 1px solid var(--border);
-    padding: 25px 15px;
     position: fixed;
     top: 0;
     left: 0;
-    display:flex;
-    flex-direction:column;
+    width: 250px; 
+    height: 100vh;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+    border-right: 1px solid rgba(255,255,255,0.08);
+    padding: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
 }
-.sidebar-logo{display:flex;gap:10px;font-weight:700;font-size:18px;margin-bottom:30px;padding-left:6px}
-.sidebar-menu{list-style:none;padding:0;margin:0}
-.sidebar-menu li{margin-bottom:18px}
-.sidebar-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;color:var(--muted);text-decoration:none;transition:all .18s}
-.sidebar-item i{font-size:18px}
-.sidebar-item:hover{background:rgba(255,255,255,0.06);color:#fff}
-.sidebar-item.active{background:var(--gradient);color:#fff}
-.logout-section{margin-top:auto;padding-top:16px;border-top:1px solid var(--border);position: absolute;
-    bottom: 20px;
-    width: 200px;}
+
+.sidebar .sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 20px 25px 20px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+}
+
+.sidebar-logo i {
+    font-size: 1.5rem;
+    color: #b621fe;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0 10px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    color: #dcdcdc;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: 0.25s ease;
+    font-size: 0.95rem;
+}
+
+.sidebar-item i {
+    font-size: 1.25rem;
+    width: 22px;
+    text-align: center;
+}
+
+.sidebar-item:hover {
+    background: rgba(255,255,255,0.08);
+    color: white;
+}
+
+.sidebar-item.active {
+    background: linear-gradient(135deg, #b621fe, #1fd1f9);
+    box-shadow: 0 0 15px rgba(182,33,254,0.4);
+    color: white !important;
+}
+
+.logout-section {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
 
 /* Main content */
 .main-content-wrapper{margin-left:250px;padding:28px 32px;min-height:100vh}
@@ -167,7 +205,6 @@ body{
 
 /* responsive tweaks */
 @media (max-width:900px){
-  .sidebar{position:relative;width:100%;height:auto;border-right:none;padding:12px}
   .main-content-wrapper{margin-left:0;padding:16px}
   .header-row{flex-direction:column;align-items:flex-start;gap:8px}
 }
@@ -175,26 +212,41 @@ body{
 </head>
 <body>
 
-<!-- SIDEBAR -->
 <div class="sidebar">
     <div class="sidebar-logo">
         <i class="bi bi-shield-shaded"></i>
-        <span>TalentFlow</span>
-    </div><br>
+        TalentFlow
+    </div>
 
     <ul class="sidebar-menu">
-        <li><a class="sidebar-item <?= isActive('admin_dashboard.php') ?>" href="admin_dashboard.php"><i class="bi bi-grid-fill"></i> Dashboard</a></li><br>
-        <li><a class="sidebar-item <?= isActive('staff.php') ?>" href="staff.php"><i class="bi bi-people-fill"></i> Staffs</a></li><br>
-        <li><a class="sidebar-item <?= isActive('taskboard.php') ?>" href="taskboard.php"><i class="bi bi-clipboard2-check-fill"></i> TaskBoard</a></li><br>
-        <li><a class="sidebar-item <?= isActive('leavemanagement.php') ?>" href="leavemanagement.php"><i class="bi bi-calendar2-x-fill"></i> Leave Manager</a></li><br>
-        <li><a class="sidebar-item <?= isActive('events.php') ?>" href="events.php"><i class="bi bi-calendar-event-fill"></i> Events</a></li><br>
-        <li><a class="sidebar-item <?= isActive('performance.php') ?>" href="performance.php"><i class="bi bi-graph-up-arrow"></i> Performance</a></li><br>
-<br><br>
-        <li class="logout-section"><a class="sidebar-item" href="admin_logout.php"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+
+        <li><a href="admin_dashboard.php" class="sidebar-item <?= isActive('admin_dashboard.php') ?>">
+            <i class="bi bi-grid-fill"></i> <span>Dashboard</span></a></li>
+
+        <li><a href="staff.php" class="sidebar-item <?= isActive('staff.php') ?>">
+            <i class="bi bi-people-fill"></i> <span>Staffs</span></a></li>
+
+        <li><a href="taskboard.php" class="sidebar-item <?= isActive('taskboard.php') ?>">
+            <i class="bi bi-clipboard2-check-fill"></i> <span>TaskBoard</span></a></li>
+
+        <li><a href="leavemanagement.php" class="sidebar-item <?= isActive('leavemanagement.php') ?>">
+            <i class="bi bi-calendar2-x-fill"></i> <span>Leave Manager</span></a></li>
+
+        <li><a href="events.php" class="sidebar-item <?= isActive('events.php') ?>">
+            <i class="bi bi-calendar-event-fill"></i> <span>Events</span></a></li>
+
+        <li><a href="performance.php" class="sidebar-item <?= isActive('performance.php') ?>">
+            <i class="bi bi-graph-up-arrow"></i> <span>Performance</span></a></li>
+
+        <li class="logout-section">
+            <a href="admin_logout.php" class="sidebar-item">
+                <i class="bi bi-box-arrow-right"></i> <span>Logout</span>
+            </a>
+        </li>
+
     </ul>
 </div>
 
-<!-- MAIN -->
 <div class="main-content-wrapper">
 
     <div class="header-row">
@@ -204,7 +256,6 @@ body{
         </div>
 
         <div>
-            <!-- optional quick action -->
             <a href="staff.php" class="btn btn-sm" style="background:var(--gradient);color:#fff;">Add Staff</a>
         </div>
     </div>
@@ -216,7 +267,6 @@ body{
         <div class="alert alert-danger mt-3"><?= h($error) ?></div>
     <?php endif; ?>
 
-    <!-- SUMMARY -->
     <div class="summary-row">
         <div class="card-box">
             <h3><?= intval($counts['total'] ?? 0) ?></h3>
@@ -236,7 +286,6 @@ body{
         </div>
     </div>
 
-    <!-- FILTERS -->
     <form class="filters" method="get" action="leavemanagement.php" style="margin-top:18px;">
         <div class="input-group" style="max-width:320px;">
             <select name="status" class="form-select">
@@ -255,7 +304,6 @@ body{
         </div>
     </form>
 
-    <!-- LEAVE LIST -->
     <div class="leave-list">
         <?php if (empty($leaves)): ?>
             <div class="card-box">No leave requests found.</div>
@@ -283,7 +331,6 @@ body{
                     </div>
 
                     <div style="display:flex;gap:8px;align-items:center;">
-                        <!-- View button => opens modal -->
                         <button class="btn btn-sm btn-outline-light" 
                             data-bs-toggle="modal" 
                             data-bs-target="#viewModal"
@@ -318,7 +365,6 @@ body{
 
 </div>
 
-<!-- VIEW MODAL -->
 <div class="modal fade" id="viewModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-md modal-dialog-centered">
     <div class="modal-content" style="background:#14132a;border:1px solid var(--border);color:#fff">
@@ -333,7 +379,7 @@ body{
           <dt class="col-sm-4">Type</dt><dd class="col-sm-8" id="m-type"></dd>
           <dt class="col-sm-4">Range</dt><dd class="col-sm-8" id="m-range"></dd>
           <dt class="col-sm-4">Manager</dt><dd class="col-sm-8" id="m-manager"></dd>
-          <dt class="col-sm-4">Status</dt><dd class="col-sm-8" id="m-status"></dd>
+          <dt class="col-sm-4">Status</dt><dd class="col-sm-8"id="m-status"></dd>
           <dt class="col-sm-4">Reason</dt><dd class="col-sm-8" id="m-reason"></dd>
         </dl>
       </div>
@@ -346,7 +392,6 @@ body{
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-// populate modal from data attributes
 const viewModal = document.getElementById('viewModal');
 viewModal.addEventListener('show.bs.modal', function (event) {
   const btn = event.relatedTarget;

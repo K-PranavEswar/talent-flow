@@ -9,13 +9,23 @@ if (!isset($_SESSION['admin'])) {
 
 require_once __DIR__ . '/../app/Models/DB.php';
 require_once __DIR__ . '/../app/Models/User.php';
-require_once __DIR__ . '/../app/Models/Task.php';
+require_once __DIR__ . '/../app/Models/Task.php'; // Note: Task model is included but not used here
 
 $pdo = DB::pdo();
 $staffs = User::all();
 
+/**
+ * Helper function to set the 'active' class on the current sidebar item.
+ * @param string $pageName The name of the PHP file (e.g., 'staff.php')
+ * @return string 'active' if it's the current page, otherwise empty string
+ */
+function isActive($pageName) {
+    return basename($_SERVER['PHP_SELF']) == $pageName ? 'active' : '';
+}
+
+
 /* ------------------------------------------
-   FETCH PERFORMANCE DATA (employee_performance)
+    FETCH PERFORMANCE DATA (employee_performance)
 --------------------------------------------- */
 $perf_stmt = $pdo->prepare("
     SELECT ep.*, u.name 
@@ -27,9 +37,17 @@ $perf_stmt->execute();
 $performance_data = $perf_stmt->fetchAll(PDO::FETCH_ASSOC);
 
 /* ------------------------------------------
-   SCORE CALCULATION (AUTO PER STAFF)
+    SCORE CALCULATION (AUTO PER STAFF)
 --------------------------------------------- */
 
+/**
+ * Calculates the final performance score based on weighted metrics.
+ * @param float|int $tasks_done
+ * @param float|int $attendance
+ * @param float|int $teamwork
+ * @param float|int $skill
+ * @return float
+ */
 function calculateScore($tasks_done, $attendance, $teamwork, $skill) {
     return ($tasks_done * 0.4) + ($attendance * 0.3) + ($teamwork * 0.2) + ($skill * 0.1);
 }
@@ -44,8 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_review'])) {
     $review = trim($_POST['review']);
     $manager = $_SESSION['admin']['name'];
 
-    // calculate score
-    $score = ($tasks * 0.4) + ($attendance * 0.3) + ($teamwork * 0.2) + ($skill * 0.1);
+    // calculate score using the defined function
+    $score = calculateScore($tasks, $attendance, $teamwork, $skill);
 
     $stmt = $pdo->prepare("
         INSERT INTO employee_performance 
@@ -87,7 +105,7 @@ body {
 }
 
 /* --------------------------
-   FIXED TALENTFLOW SIDEBAR
+    FIXED TALENTFLOW SIDEBAR
 --------------------------- */
 .sidebar {
     position: fixed;
@@ -206,7 +224,7 @@ body {
         <li><a href="events.php" class="sidebar-item <?= isActive('events.php') ?>">
             <i class="bi bi-calendar-event-fill"></i> <span>Events</span></a></li>
 
-        <li><a href="performance.php" class="sidebar-item active">
+        <li><a href="performance.php" class="sidebar-item <?= isActive('performance.php') ?>">
             <i class="bi bi-graph-up-arrow"></i> <span>Performance</span></a></li>
 
         <li class="logout-section">
@@ -229,7 +247,6 @@ body {
 <div class="alert alert-success">Performance review saved successfully.</div>
 <?php endif; ?>
 
-<!-- Performance Table -->
 <div class="card-glass mt-4">
     <h4 class="mb-3"><i class="bi bi-star-fill"></i> Latest Performance Reviews</h4>
 
@@ -261,7 +278,6 @@ body {
     </table>
 </div>
 
-<!-- ADD REVIEW -->
 <div class="card-glass mt-4">
     <h4><i class="bi bi-pencil-square"></i> Add Performance Review</h4>
     
@@ -279,22 +295,22 @@ body {
 
         <div class="col-md-2">
             <label class="form-label">Tasks</label>
-            <input type="number" name="tasks" class="form-control" min="0" required>
+            <input type="number" name="tasks" class="form-control" min="0" required id="tasks_input">
         </div>
 
         <div class="col-md-2">
             <label class="form-label">Attendance</label>
-            <input type="number" name="attendance" class="form-control" min="0" max="100" required>
+            <input type="number" name="attendance" class="form-control" min="0" max="100" required id="attendance_input">
         </div>
 
         <div class="col-md-2">
             <label class="form-label">Teamwork</label>
-            <input type="number" name="teamwork" class="form-control" min="0" max="100" required>
+            <input type="number" name="teamwork" class="form-control" min="0" max="100" required id="teamwork_input">
         </div>
 
         <div class="col-md-2">
             <label class="form-label">Skill</label>
-            <input type="number" name="skill" class="form-control" min="0" max="100" required>
+            <input type="number" name="skill" class="form-control" min="0" max="100" required id="skill_input">
         </div>
 
         <div class="col-12">
@@ -303,8 +319,8 @@ body {
         </div>
 
         <div class="col-md-3">
-            <label class="form-label fw-bold">Final Score</label>
-            <input type="number" name="score" class="form-control" required>
+            <label class="form-label fw-bold">Final Score (Auto-Calculated)</label>
+            <input type="number" id="final_score" class="form-control" readonly style="background-color: #333; color: #fff;">
         </div>
 
         <div class="col-12 mt-3">
@@ -314,6 +330,39 @@ body {
 </div>
 
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all the metric inputs
+    const tasksInput = document.getElementById('tasks_input');
+    const attendanceInput = document.getElementById('attendance_input');
+    const teamworkInput = document.getElementById('teamwork_input');
+    const skillInput = document.getElementById('skill_input');
+    const scoreOutput = document.getElementById('final_score');
+
+    // Define the calculation function in JS (must match PHP)
+    function updateScore() {
+        // Use parseFloat and default to 0 if input is empty or invalid
+        const tasks = parseFloat(tasksInput.value) || 0;
+        const attendance = parseFloat(attendanceInput.value) || 0;
+        const teamwork = parseFloat(teamworkInput.value) || 0;
+        const skill = parseFloat(skillInput.value) || 0;
+
+        // Same calculation logic as the PHP function
+        const score = (tasks * 0.4) + (attendance * 0.3) + (teamwork * 0.2) + (skill * 0.1);
+        
+        // Display the score, fixed to 2 decimal places
+        scoreOutput.value = score.toFixed(2);
+    }
+
+    // Add event listeners to all metric inputs
+    const inputs = [tasksInput, attendanceInput, teamworkInput, skillInput];
+    inputs.forEach(input => {
+        // 'input' event fires immediately on change
+        input.addEventListener('input', updateScore);
+    });
+});
+</script>
 
 </body>
 </html>
