@@ -14,7 +14,7 @@ $tasks = Task::all();
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>TalentFlow | Analytics</title>
+  <title>TalentFlow | Task Board</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <style>
@@ -99,7 +99,7 @@ $tasks = Task::all();
 
 <div class="page-header">
   <div>
-    <h2><i class="bi bi-bar-chart-fill"></i> HR Analytics Overview</h2>
+    <h2><i class="bi bi-bar-chart-fill"></i> HR TaskBoard Overview</h2>
     <p class="text-secondary">Insights into tasks, users, and workflow performance.</p>
   </div>
   <!-- ✅ Back to Dashboard Button -->

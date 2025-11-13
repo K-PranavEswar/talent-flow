@@ -1,30 +1,34 @@
 <?php
 session_start();
 define('APP_URL', 'http://localhost/talentflow/public');
-
-// ✅ Hardcoded admin credentials (for now)
-// You can switch to DB-based login later via Admin::verify()
-$adminUser = "admin";
-$adminPass = "admin";
+require_once __DIR__ . '/../config/db.php'; // ✅ Adjust path if needed
 
 $error = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $username = trim($_POST['username']);
+  $email = trim($_POST['username']); // Admin uses email as login ID
   $password = trim($_POST['password']);
 
-  if ($username === $adminUser && $password === $adminPass) {
-    // ✅ Store admin as an array — prevents offset errors
-    $_SESSION['admin'] = [
-      'id' => 1,
-      'name' => 'Administrator',
-      'email' => 'admin@talentflow.com'
-    ];
+  try {
+    // ✅ Fetch admin by email
+    $admin = DB::fetch("SELECT * FROM admins WHERE email = ?", [$email]);
 
-    header('Location: admin_dashboard.php');
-    exit;
-  } else {
-    $error = "Invalid admin credentials!";
+    if ($admin && password_verify($password, $admin['password'])) {
+      // ✅ Store admin info in session
+      $_SESSION['admin'] = [
+        'id' => $admin['id'],
+        'name' => $admin['name'],
+        'email' => $admin['email'],
+        'photo' => $admin['photo'] ?? 'default.png'
+      ];
+
+      header('Location: admin_dashboard.php');
+      exit;
+    } else {
+      $error = "Invalid email or password!";
+    }
+  } catch (Exception $e) {
+    $error = "Database error: " . $e->getMessage();
   }
 }
 ?>
@@ -141,8 +145,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <form method="POST" action="">
       <div class="mb-3">
-        <label class="form-label text-white-50">Admin Username</label>
-        <input type="text" name="username" class="form-control" placeholder="Enter admin ID" required>
+        <label class="form-label text-white-50">Email</label>
+        <input type="email" name="username" class="form-control" placeholder="Enter email" required>
       </div>
       <div class="mb-3">
         <label class="form-label text-white-50">Password</label>

@@ -2,7 +2,6 @@
 session_start();
 define('APP_URL', 'http://localhost/talentflow/public');
 
-// ✅ Redirect to login if not authenticated
 if (!isset($_SESSION['admin']) || !is_array($_SESSION['admin'])) {
   header('Location: admin_login.php');
   exit;
@@ -10,17 +9,17 @@ if (!isset($_SESSION['admin']) || !is_array($_SESSION['admin'])) {
 
 require_once __DIR__ . '/../app/Models/Admin.php';
 
-// ✅ Get session admin data
+// ✅ Get current admin session data
 $sessionAdmin = $_SESSION['admin'];
 
-// ✅ Try fetching admin from DB (optional)
-$admin = null;
+// ✅ Fetch latest data from DB
 try {
   $admin = Admin::find($sessionAdmin['id']);
 } catch (Exception $e) {
   $admin = $sessionAdmin;
 }
 
+// ✅ If admin record not found, fallback
 if (!$admin) {
   $admin = $sessionAdmin;
 }
@@ -90,7 +89,6 @@ if (!$admin) {
       background: rgba(255,255,255,0.1);
     }
 
-    /* Main Content */
     .main-content-wrapper {
       margin-left: 80px;
       padding-top: 2rem;
@@ -108,7 +106,6 @@ if (!$admin) {
       -webkit-text-fill-color: transparent;
     }
 
-    /* Profile Card */
     .card-glass {
       background: var(--card-bg);
       border: 1px solid rgba(255,255,255,0.08);
@@ -162,7 +159,6 @@ if (!$admin) {
     <i class="bi bi-shield-lock-fill fs-3"></i>
   </div>
 
-  <!-- ✅ Back Button Only -->
   <div>
     <a href="admin_dashboard.php" title="Back to Dashboard">
       <i class="bi bi-arrow-left-circle fs-3"></i>
@@ -179,7 +175,9 @@ if (!$admin) {
   <div class="container px-4">
     <div class="card-glass text-center mx-auto" style="max-width: 600px;">
       <img 
-        src="<?= !empty($admin['photo']) ? APP_URL . '/uploads/' . htmlspecialchars($admin['photo']) : 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png' ?>" 
+        src="<?= !empty($admin['photo']) 
+          ? APP_URL . '/assets/images/' . htmlspecialchars($admin['photo']) 
+          : 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png' ?>" 
         class="profile-avatar" alt="Admin Photo">
 
       <form action="update_profile.php" method="POST" enctype="multipart/form-data">
@@ -200,7 +198,7 @@ if (!$admin) {
 
         <div class="mb-3">
           <label class="form-label">Profile Photo</label>
-          <input type="file" name="photo" class="form-control">
+          <input type="file" name="photo" class="form-control" accept="image/*">
         </div>
 
         <button type="submit" class="btn-gradient mt-2">
