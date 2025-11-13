@@ -37,7 +37,6 @@
 | Database | MySQL (phpMyAdmin) |
 | Server | XAMPP / Apache |
 | Version Control | Git & GitHub |
-
 ---
 
 ## 📁 Project Structure
