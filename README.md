@@ -39,110 +39,6 @@
 | Version Control | Git & GitHub |
 ---
 
-## 📁 Project Structure
-
-```
-
-TALENTFLOW/
-│
-├── app/
-│   ├── Controllers/
-│   │   ├── FaqController.php
-│   │   ├── InterviewController.php
-│   │   ├── LeaveController.php
-│   │   ├── OfferController.php
-│   │   └── OnboardingController.php
-│   │
-│   ├── libs/
-│   │   └── PHPMailer/
-│   │       └── src/
-│   │           ├── Exception.php
-│   │           ├── PHPMailer.php
-│   │           └── SMTP.php
-│   │
-│   ├── Models/
-│   │   ├── Admin.php
-│   │   ├── Artifact.php
-│   │   ├── DB.php
-│   │   ├── Leave.php
-│   │   ├── Run.php
-│   │   ├── Task.php
-│   │   └── User.php
-│   │
-│   ├── Services/
-│   │   ├── CalendarService.php
-│   │   ├── DocsService.php
-│   │   ├── FaqBrain
-│   │   ├── HRISService.php
-│   │   ├── IAMService.php
-│   │   ├── ITSMService.php
-│   │   ├── LeaveService.php
-│   │   ├── MailService.php
-│   │   ├── MessagingService.php
-│   │   └── Orchestrator.php
-│   │
-│   ├── Views/
-│   │   ├── 404.php
-│   │   ├── dashboard.php
-│   │   ├── faq.php
-│   │   ├── interview_form.php
-│   │   ├── layout.php
-│   │   ├── leave_form.php
-│   │   ├── leave_summary.php
-│   │   ├── offer_form.php
-│   │   ├── onboarding_form.php
-│   │   └── helpers.php
-│   │
-│   ├── config/
-│   │   ├── config.php
-│   │   ├── db.php
-│   │   ├── mail.php
-│   │   └── routes.php
-│   │
-│   ├── database/
-│   │   └── schema.sql
-│   │
-│   └── mock/
-│       ├── calendar.php
-│       ├── docs.php
-│       ├── hris.php
-│       ├── iam.php
-│       ├── itsm.php
-│       └── messaging.php
-│
-├── public/
-│   ├── assets/
-│   │   ├── css/
-│   │   │   └── app.css
-│   │   └── js/
-│   │       └── app.js
-│   │
-│   ├── .htaccess
-│   ├── admin_dashboard.php
-│   ├── admin_login.php
-│   ├── admin_logout.php
-│   ├── admin_profile.php
-│   ├── analytics.php
-│   ├── api_live_stats.php
-│   ├── index.php
-│   ├── leave_action.php
-│   ├── login.php
-│   ├── signup.php
-│   ├── task_action.php
-│   ├── task_edit.php
-│   ├── update_profile.php
-│   │
-│   ├── .env.example
-│   ├── README.md
-│   ├── talentflow.sql
-│   └── test_email.php
-
-
-
-````
-
----
-
 ## ⚙️ Setup Instructions
 
 ### 1️⃣ Clone the repository
@@ -171,17 +67,7 @@ cd talent-flow
    ```
    CREATE DATABASE talentflow;
    ```
-3. Import the provided SQL file (if available) or manually create the `users` table:
-
-   ```sql
-   CREATE TABLE users (
-     id INT AUTO_INCREMENT PRIMARY KEY,
-     name VARCHAR(100),
-     email VARCHAR(100) UNIQUE,
-     password VARCHAR(255),
-     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-   );
-   ```
+3. Import the provided SQL file
 
 ### 5️⃣ Start the Server
 
@@ -190,17 +76,6 @@ cd talent-flow
 * Visit your app at:
   👉 [http://localhost/talentflow/public/signup.php](http://localhost/talentflow/public/signup.php)
 
----
-
-## 🧠 Future Enhancements
-
-* Role-based access (Admin, HR, Employee)
-* Attendance tracking
-* Email/SMS notifications
-* Data export to Excel/PDF
-* AI-powered analytics
-
----
 
 ## 👨‍💻 Author
 
