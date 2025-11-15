@@ -2,8 +2,9 @@
 require_once __DIR__ . '/../Services/FaqBrain.php';
 
 class FaqController {
+
   public function page() {
-    $view = 'faq';
+    $view = 'faq';   // <-- REQUIRED
     include __DIR__ . '/../Views/layout.php';
   }
 

@@ -50,53 +50,95 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>Sign Up | TalentFlow HR Orchestrator</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <style>
     :root {
       --primary: #2575fc;
-      --gradient: linear-gradient(135deg, #6a11cb, #2575fc);
     }
 
+    /* ------------------------ */
+    /*  HR Themed Background    */
+    /* ------------------------ */
     body {
-      background: var(--gradient);
+      margin: 0;
+      padding: 0;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: 'Inter', system-ui, sans-serif;
-      padding: 1rem;
+      overflow: hidden;
+      position: relative;
+
+      background: url('<?= APP_URL ?>/assets/images/profileee.png') 
+                  no-repeat center center/cover;
     }
 
+    /* Dark Blur Overlay */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(4px);
+      z-index: 0;
+    }
+
+    /* Purple-Blue HR Glow */
+    body::after {
+      content: "";
+      position: absolute;
+      width: 650px;
+      height: 650px;
+      bottom: -150px;
+      left: -150px;
+      background: radial-gradient(circle, rgba(98, 54, 255, 0.55), transparent 70%);
+      filter: blur(120px);
+      z-index: 0;
+    }
+
+    /* Signup Card */
     .signup-card {
-      background: #fff;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(16px);
       border-radius: 20px;
-      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 35px rgba(0, 0, 0, 0.25);
       width: 100%;
       max-width: 420px;
-      padding: 2rem 1.8rem;
-      transition: 0.3s ease;
-    }
-
-    .signup-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+      padding: 2.3rem 1.8rem;
+      position: relative;
+      z-index: 2;
+      color: #fff;
     }
 
     h3 {
       font-weight: 700;
-      color: var(--primary);
+      color: #fff;
       text-align: center;
       margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      font-weight: 500;
     }
 
     .form-control {
       border-radius: 10px;
       padding: 0.75rem;
-      font-size: 0.95rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
-    .form-label {
-      font-weight: 500;
-      margin-bottom: 0.4rem;
+    .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .form-control:focus {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border-color: #fff;
     }
 
     .btn-primary {
@@ -117,37 +159,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       font-size: 0.9rem;
     }
 
-    .text-center small {
-      font-size: 0.9rem;
-    }
-
-    @media (max-width: 576px) {
-      .signup-card {
-        padding: 1.5rem 1.2rem;
-        border-radius: 16px;
-      }
-
-      h3 {
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
-      }
-
-      .form-control {
-        font-size: 0.9rem;
-        padding: 0.65rem 0.8rem;
-      }
-
-      .btn-primary {
-        font-size: 0.95rem;
-        padding: 0.7rem;
-      }
-
-      small {
-        font-size: 0.85rem;
-      }
+    footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      color: #ddd;
     }
   </style>
 </head>
+
 <body>
 
 <div class="signup-card">
@@ -185,14 +204,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <div class="text-center mt-3">
     <small>Already have an account? 
-      <a href="<?= APP_URL ?>/login.php" class="text-decoration-none fw-semibold text-primary">Login here</a>
+      <a href="<?= APP_URL ?>/login.php" class="text-decoration-none text-info fw-semibold">
+        Login here
+      </a>
     </small>
   </div>
 
-  <footer class="footer mt-5 py-3 text-center text-muted border-top">
-    <div class="container">
-      <small>© 2025 <strong>MACSEEDS</strong> | Hackathon Series — <strong>lablab.ai</strong></small>
-    </div>
+  <footer class="mt-4">
+    <small>© 2025 <strong>MACSEEDS</strong> • Hackathon Series — <strong>lablab.ai</strong></small>
   </footer>
 </div>
 

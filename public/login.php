@@ -38,20 +38,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <title>Staff Login | TalentFlow</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
   <style>
+    /* 🌟 HR Background Image */
     body {
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      margin: 0;
+      padding: 0;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       font-family: 'Inter', sans-serif;
-      margin: 0;
       overflow: hidden;
+
+      background: url('<?= APP_URL ?>/assets/images/profileee.png') no-repeat center center / cover;
+      position: relative;
     }
 
+    /* Dark Overlay */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(3px);
+      z-index: 0;
+    }
+
+    .login-box,
+    .top-btn,
+    footer {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Login Card */
     .login-box {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.10);
       backdrop-filter: blur(15px);
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 16px;
@@ -60,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       max-width: 380px;
       color: #fff;
       text-align: center;
-      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 25px rgba(0,0,0,0.3);
     }
 
     .login-box h3 {
@@ -150,15 +173,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
   </style>
 </head>
+
 <body>
 
-<!-- 🔹 Admin Login Button -->
+<!-- Admin Login Button -->
 <a href="admin_login.php" class="top-btn">
   <i class="bi bi-person-gear me-1"></i> Admin Login
 </a>
 
 <div class="login-box">
-  <h3><i class="bi bi-people-fill me-2"></i> Staff Login</h3>
+  <h3><i class="bi bi-people-fill me-2"></i> Login</h3>
 
   <?php if (!empty($error)): ?>
     <div class="alert small text-center py-2"><?= $error ?></div>

@@ -368,16 +368,17 @@ body {
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const ctx = document.getElementById('realTimeChart');
+
     if (!ctx) return;
 
-    new Chart(ctx, {
+    const chart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['-30s','-25s','-20s','-15s','-10s','-5s','Now'],
+            labels: [' ',' ',' ',' ',' ',' ','Now'],
             datasets: [
                 {
                     label: 'User Logins',
-                    data: [5,8,12,10,15,11,18],
+                    data: [5, 8, 12, 10, 15, 11, 18],
                     borderColor: '#b621fe',
                     backgroundColor: 'rgba(182,33,254,0.15)',
                     fill: true,
@@ -385,7 +386,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 },
                 {
                     label: 'Tasks Completed',
-                    data: [2,3,2,5,4,6,5],
+                    data: [2, 3, 2, 5, 4, 6, 5],
                     borderColor: '#1fd1f9',
                     backgroundColor: 'rgba(31,209,249,0.15)',
                     fill: true,
@@ -396,15 +397,38 @@ document.addEventListener("DOMContentLoaded", () => {
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            animation: {
+                duration: 500
+            },
             scales: {
                 y: { beginAtZero: true, ticks: { color: '#bbb' } },
                 x: { ticks: { color: '#bbb' } }
             },
-            plugins: { legend: { labels: { color: '#fff' } } }
+            plugins: {
+                legend: { labels: { color: '#fff' } }
+            }
         }
     });
+    setInterval(() => {
+    const now = new Date();
+    const timeLabel = now.toLocaleTimeString('en-IN', {
+        hour12: false
+    });
+    chart.data.labels.shift();
+    chart.data.labels.push(timeLabel);
+    const newLogin = Math.floor(Math.random() * 20) + 5;
+    const newTask = Math.floor(Math.random() * 8) + 2;
+    chart.data.datasets[0].data.shift();
+    chart.data.datasets[0].data.push(newLogin);
+
+    chart.data.datasets[1].data.shift();
+    chart.data.datasets[1].data.push(newTask);
+
+    chart.update();
+}, 1000);
 });
 </script>
+
 
 </body>
 </html>

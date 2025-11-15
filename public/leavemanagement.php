@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id'
     $action = $_POST['action'] === 'approve' ? 'Approved' : ($_POST['action'] === 'reject' ? 'Rejected' : null);
 
     if ($action !== null) {
-        $stmt = $pdo->prepare("UPDATE leaves SET status = ? WHERE id = ?");
+        $stmt = $pdo->prepare("UPDATE leave_requests SET status = ? WHERE id = ?");
         if ($stmt->execute([$action, $id])) {
             $success = "Leave #{$id} marked as {$action}.";
         } else {
@@ -44,7 +44,7 @@ if ($search !== '') {
 
 $where_sql = $where ? ('WHERE ' . implode(' AND ', $where)) : '';
 
-$sql = "SELECT * FROM leaves {$where_sql} ORDER BY id DESC";
+$sql = "SELECT * FROM leave_requests {$where_sql} ORDER BY id DESC";
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $leaves = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -54,7 +54,7 @@ $countStmt = $pdo->query("SELECT
     SUM(status = 'Approved') AS approved,
     SUM(status = 'Rejected') AS rejected,
     COUNT(*) as total
-FROM leaves");
+FROM leave_requests");
 $counts = $countStmt->fetch(PDO::FETCH_ASSOC);
 
 function isActive($p) {
@@ -253,10 +253,6 @@ body{
         <div>
             <h2>Leave Management</h2>
             <p class="small-muted">Approve or reject employee leave requests</p>
-        </div>
-
-        <div>
-            <a href="staff.php" class="btn btn-sm" style="background:var(--gradient);color:#fff;">Add Staff</a>
         </div>
     </div>
 
